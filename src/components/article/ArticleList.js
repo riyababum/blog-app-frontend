@@ -1,6 +1,5 @@
 import React,{useState,useEffect} from 'react';
 import {Link} from 'react-router-dom';
-// import Error from '../error/Error';
 import './Article.css';
 
 function ArticleList(props) {
@@ -20,24 +19,25 @@ function ArticleList(props) {
 
 
     return (
-        <>
-            <div>
-                <h1 id='articles'>Articles</h1>
-                {articleData.map( (article,key)=> (
-                    <Link id='body' key={key} to={`/article/${article.name}`}>
-                        <h3 id='list'>
-                            {article.title} 
-                        </h3>  
-                        <p id='list-body'>
-                            {article.description.substring(0,150)}....
-                        </p>
-                        <br/>
-                        <hr/>
-                        <br/>
-                    </Link>          
+            <div id='container'>
+                <h1 id='articles'>Articles</h1> <br/>
+
+                {articleData.map( (article,key1,key2)=> (
+                    <div key={key1} >
+                        <Link id='body' to={`/article/${article.name}`}>
+                            <h3 id='list'>
+                                {article.title} 
+                            </h3>  
+                            <p id='list-body'>
+                                {article.description.substring(0,150)}....
+                            </p> 
+                            <br/>
+                        </Link>
+                        <br/> <hr/>
+                    </div>
                 ))}
             </div>
-        </>
+    
     );
 }
 

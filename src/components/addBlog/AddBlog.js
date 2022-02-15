@@ -1,8 +1,11 @@
 import React,{ useState} from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './AddBlog.css';
 
 function AddBlog(props) {
+
+    const navigate = useNavigate();
 
     const [blog, setBLog] = useState({
         name:'',
@@ -16,12 +19,16 @@ function AddBlog(props) {
     }
 
     const handleSubmit = async (e)=>{
-        e.preventDefault();
         axios.post(`/api/article/add-blog`,blog)
             .then(res => {
                 alert(res.data.message);
-            })
-}
+                setBLog({name: '',
+                title:'',
+                description:''})
+            });
+            navigate('/article-list');
+    }
+    
 
     return (
         <div>

@@ -18,26 +18,30 @@ function App() {
 
   const [articleName,setArticleName]= useState({});
 
+  const [authorized,setAuthorized] = useState(false);
+
   return (
     <Router>
       <>
-        <Header setUserLogin={setUserLogin}/>
-        <Routes>
-          <Route exact path='/' element={<Home/>}/>
+        <Header authorized={authorized} setUserLogin={setUserLogin}/>
 
-          <Route path='/login' element={<Login setUserLogin={setUserLogin} />}/>
+        <Routes>
+          
+          <Route exact path='/' element={<Home/>}/>
 
           <Route path='/signup' element={<Signup/>}/>
 
-          <Route path='/blog'  element={ userLogin && userLogin._id ? <Blog/> : <Login setUserLogin={setUserLogin} />} />
+          <Route path='/login' element={<Login setAuthorized={setAuthorized} setUserLogin={setUserLogin} />}/>
 
-          <Route path='/article-list' element={ userLogin && userLogin._id ? <ArticleList/> : <Login setUserLogin={setUserLogin} />} />
+          <Route path='/blog'  element={ userLogin && userLogin._id ? <Blog/> : <Login setAuthorized={setAuthorized} setUserLogin={setUserLogin} />} />
 
-          <Route path='/article/:name' element={<Article setArticleName={setArticleName}/>} />
+          <Route path='/article-list' element={ userLogin && userLogin._id ?<ArticleList/> : <Login setAuthorized={setAuthorized} setUserLogin={setUserLogin} />}/>
 
-          <Route path='/article/:name/edit' element={<Edit articleName={articleName}/>} />
+          <Route path='/article/:name' element={userLogin && userLogin._id ? <Article authorized={authorized} setArticleName={setArticleName}/> : <Login setAuthorized={setAuthorized} setUserLogin={setUserLogin} />} />
 
-          <Route path='/add-blog' element={<AddBlog/>} />
+          <Route path='/article/edit' element={userLogin && userLogin._id ? <Edit articleName={articleName}/> :<Login setAuthorized={setAuthorized} setUserLogin={setUserLogin} /> } />
+
+          <Route path='/add-blog' element={ userLogin && userLogin._id ? <AddBlog/>: <Login setAuthorized={setAuthorized} setUserLogin={setUserLogin} />} />
 
           <Route path='*' element={<Error/>} />
         </Routes> 
