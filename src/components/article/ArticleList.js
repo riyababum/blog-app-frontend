@@ -1,9 +1,12 @@
 import React,{useState,useEffect} from 'react';
-import {Link} from 'react-router-dom';
+import {Link,useNavigate} from 'react-router-dom';
+import Error from '../error/Error';
 import './Article.css';
+import axios from 'axios';
 
 function ArticleList(props) {
 
+    const navigate = useNavigate();
     const [articleData,setArticleData] = useState([]);
 
     async function fetchAPI (){
@@ -19,11 +22,10 @@ function ArticleList(props) {
 
 
     return (
-            <div id='container'>
-                <h1 id='articles'>Articles</h1> <br/>
-
-                {articleData.map( (article,key1)=> (
-                    <div key={key1} >
+            <div>
+                <h1 id='articles'>Articles</h1>
+                {articleData.map( (article,key1,key2)=> (
+                    <div key={key1} id='container'>
                         <Link id='body' to={`/article/${article.name}`}>
                             <h3 id='list'>
                                 {article.title} 
