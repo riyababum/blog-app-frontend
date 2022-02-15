@@ -22,7 +22,7 @@ function ArticleList(props) {
             <div id='container'>
                 <h1 id='articles'>Articles</h1> <br/>
 
-                {articleData.map( (article,key1,key2)=> (
+                {articleData.map( (article,key1)=> (
                     <div key={key1} >
                         <Link id='body' to={`/article/${article.name}`}>
                             <h3 id='list'>
