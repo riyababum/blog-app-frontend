@@ -1,30 +1,36 @@
-import React,{useState,useEffect} from 'react';
-import {Link,useNavigate} from 'react-router-dom';
-import Error from '../error/Error';
+import React,{useState,useEffect,useRef} from 'react';
+import {Link} from 'react-router-dom';
 import './Article.css';
-import axios from 'axios';
 
 function ArticleList(props) {
 
-    const navigate = useNavigate();
     const [articleData,setArticleData] = useState([]);
+    const [isVisible, setIsVisible] = useState (true);
 
-    async function fetchAPI (){
+    const fetchAPI = async ()=>{
+
         const response = await fetch(`/api/article-list`);
-        const body = await response.json();
-        console.log(body); 
+        const body = await response.json(); 
         setArticleData(body);
     }
 
-    useEffect(()=>{
-        fetchAPI();  
-    },[]);
+    useEffect( ()=>{    
+        let cancel = false;
+        fetchAPI().then(() => {
+            if (cancel) return;
+            setIsVisible(false);
+        });
+        
+        return () => { 
+            cancel = true;
+        }
+    }, [ ] );
 
 
     return (
             <div>
                 <h1 id='articles'>Articles</h1>
-                {articleData.map( (article,key1,key2)=> (
+                {articleData.map( (article,key1)=> (
                     <div key={key1} id='container'>
                         <Link id='body' to={`/article/${article.name}`}>
                             <h3 id='list'>

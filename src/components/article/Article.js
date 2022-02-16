@@ -10,16 +10,25 @@ function Article(props) {
     const {authorized, setArticleName } = props;
 
     const [articleData,setArticleData] = useState({});
+    const [isVisible, setIsVisible] = useState (true);
 
     async function fetchAPI (){
         const response = await fetch(`/api/article/${name}`);
         const body = await response.json();
         setArticleData(body);
-    }
+    } 
 
-    useEffect(()=>{
-        fetchAPI();  
-    },[]);
+    useEffect(()=>{    
+        let cancel = false;
+        fetchAPI().then(() => {
+            if (cancel) return;
+            setIsVisible(false);
+        });
+        
+        return () => { 
+            cancel = true;
+        }
+    }, [ ] );
 
     async function deleteBlog(articleName) {
         
