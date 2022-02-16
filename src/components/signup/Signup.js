@@ -32,7 +32,7 @@ function Signup() {
 
         if(Object.keys(errors).length===0 && isSubmit){
 
-            axios.post("/api/signup",user)
+            axios.post("/signup",user)
             .then(res => {
                 alert(res.data.message);
                 navigate('/login');

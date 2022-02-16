@@ -9,6 +9,7 @@ function Login(props) {
     const { setAuthorized }= props;
     const navigate = useNavigate();
 
+    // const [userLogin,setUserLogin]= ({});
     const { setUserLogin } = props;
 
     const [user, setUser] = useState({
@@ -42,7 +43,7 @@ function Login(props) {
     useEffect(()=>{
         if(Object.keys(errors).length===0 && isSubmit){
 
-            axios.post('/api/login',user)
+            axios.post('/login',user)
             .then(res=>{ 
                 alert(res.data.message);
                 setUserLogin( res.data.user );

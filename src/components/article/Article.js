@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React,{useState,useEffect} from 'react';
 import { useParams ,Link, useNavigate} from 'react-router-dom';
-import './Article.css';
+import Error from '../error/Error';
 
 function Article(props) {
     const navigate = useNavigate();
@@ -10,25 +10,16 @@ function Article(props) {
     const {authorized, setArticleName } = props;
 
     const [articleData,setArticleData] = useState({});
-    const [isVisible, setIsVisible] = useState (true);
 
     async function fetchAPI (){
         const response = await fetch(`/api/article/${name}`);
         const body = await response.json();
         setArticleData(body);
-    } 
+    }
 
-    useEffect(()=>{    
-        let cancel = false;
-        fetchAPI().then(() => {
-            if (cancel) return;
-            setIsVisible(false);
-        });
-        
-        return () => { 
-            cancel = true;
-        }
-    }, [ ] );
+    useEffect(()=>{
+        fetchAPI();  
+    },[]);
 
     async function deleteBlog(articleName) {
         
@@ -38,7 +29,7 @@ function Article(props) {
     }
     return (
         <>
-            <div id='article'>
+            <div className='article'>
                 <h1 id='article-title'>{articleData.title}</h1>
                 <p id='article-body'>{articleData.description}</p>
                 <br/><br/>

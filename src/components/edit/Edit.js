@@ -25,6 +25,7 @@ const Edit = (props) => {
     const editBlogDetails = async(e) => {
         e.preventDefault();
         await axios.put(`/api/article/${articleName}/edit`, blog);
+
         navigate('/article-list');
     }
 
